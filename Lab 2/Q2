@@ -15,10 +15,6 @@ int** matricesAddition(int **mat1 , int ** mat2 ,int  r ,int c) {
     int ** result = new int*[r];
     for (int i=0; i<r;i++) {
         result[i]= new int[c];
-        if (!result[i]) {
-        cout<<"memory allocation failed for matrix 2"<<endl;
-        return 0;
-    }
     }
 
     for (int j=0;j<r;j++) {
@@ -36,10 +32,6 @@ cout<<"subtracting matrices"<<endl;
     int ** result = new int*[r];
     for (int i=0; i<r;i++) {
         result[i]= new int[c];
-        if (!result[i]) {
-        cout<<"memory allocation failed for matrix 2"<<endl;
-        return 0;
-    }
     }
 
     for (int j=0;j<r;j++) {
@@ -86,10 +78,6 @@ cout<<"allocating memory for matrix 1"<<endl;
 int **mat1 = new int*[r1];
 for (int i=0;i<r1 ;i++) {
     mat1[i] = new int[c1];
-    if (!mat1[i]) {
-        cout<<"memory allocation failed for matrix 2"<<endl;
-        return 0;
-    }
 }
 
 cout<<"taking input for matrix 1: "<<endl;
@@ -100,10 +88,6 @@ int **mat2 = new int*[r2];
 for (int i =0;i<r2 ;i++) {
     mat2[i] = new int[c2];
 
-    if (!mat2[i]) {
-        cout<<"memory allocation failed for matrix 2"<<endl;
-        return 0;
-    }
 }
 cout<<"taking input for matrix 2:"<<endl;
 input(mat2, r2, c2);
@@ -122,12 +106,12 @@ cout<< " forwarding towards deallocating the memory of resulted matrices ...... 
 deAllocatMemory (resultAdd, r1 );
 cout<<"suceesfully deallocated the memory for addition matrix; "<<endl;
 deAllocatMemory (resultSub , r1);
-cout<<"suceesfully deallocated the memory for subtraction matrix ; "<<endl;
+cout<<"sucessfully deallocated the memory for subtraction matrix ; "<<endl;
 cout<< " forwarding towards deallocating the memory of our original  matrix 1 and matrix 2 ...... "<<endl;
 deAllocatMemory (mat1 , r1 );
-cout<<"suceesfully deallocated the memory for matrix 1; "<<endl;
+cout<<"sucessfully deallocated the memory for matrix 1; "<<endl;
 deAllocatMemory (mat2 , r2);
-cout<<"suceesfully deallocated the memory for matrix 2; "<<endl;
+cout<<"sucessfully deallocated the memory for matrix 2; "<<endl;
 
 }
 else {
@@ -136,9 +120,9 @@ else {
 
 cout<< " forwarding towards deallocating the memory...... "<<endl;
 deAllocatMemory (mat1 , r1 );
-cout<<"suceesfully deallocated the memory for matrix 1; "<<endl;
+cout<<"sucessfully deallocated the memory for matrix 1; "<<endl;
 deAllocatMemory (mat2 , r2);
-cout<<"suceesfully deallocated the memory for matrix 2; "<<endl;
+cout<<"sucessfully deallocated the memory for matrix 2; "<<endl;
 };
 
 
