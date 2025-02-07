@@ -12,8 +12,8 @@ books* dynamicAllocationMemory (int totalNum) {
 }
 
 void inputBooks (books*book , int totalNum) {
+cin.ignore();
     for (int i=0;i<totalNum;i++) {
-        cin.ignore();
     cout<<"enter the title of book : "<<i<<endl;
     getline(cin , book[i].title);
     cout<<"enter the name of the author   "<<endl;
