@@ -1,0 +1,91 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class MusicPlayer {
+    string playlist[100]; // Corrected name
+    string currentlyPlayingSong;
+    int totalSongs;
+
+public:
+    // Constructor
+    MusicPlayer() {
+        totalSongs = 0;
+        currentlyPlayingSong = "";
+    }
+
+    // Method to add music
+    void AddMusic(string song) {
+        if (totalSongs < 100) {
+            playlist[totalSongs] = song;
+            totalSongs++;
+            cout << "Song added successfully" << endl;
+        } else {
+            cout << "Playlist is full" << endl;
+        }
+    }
+
+    // Method to remove a song
+    void removeSong(string song) {
+        bool found = false;
+        for (int i = 0; i < totalSongs; i++) {
+            if (playlist[i] == song) {
+                for (int j = i; j < totalSongs - 1; j++) {
+                    playlist[j] = playlist[j + 1];
+                }
+                totalSongs--;
+                cout << "Song removed successfully" << endl;
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            cout << "Song not found in playlist" << endl;
+        }
+    }
+
+    // Method to play a song
+    void playSong(string song) {  
+        bool found = false;
+        for (int i = 0; i < totalSongs; i++) {
+            if (playlist[i] == song) {
+                currentlyPlayingSong = song;
+                cout << "Playing song: " << song << endl;
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            cout << "Song not found in playlist" << endl;
+        }
+    }
+
+    // Method to display the playlist
+    void displayPlaylist() {
+        cout << "----------------- Playlist -----------------" << endl;
+        if (totalSongs == 0) {
+            cout << "Playlist is empty!" << endl;
+        } else {
+            for (int i = 0; i < totalSongs; i++) {
+                cout << i + 1 << ". " << playlist[i] << endl;
+            }
+        }
+        cout << "--------------------------------------------" << endl;
+    }
+};
+
+int main() {
+    MusicPlayer p;
+    p.AddMusic("song1");
+    p.AddMusic("song2");
+    p.AddMusic("song3");
+    p.AddMusic("song4");
+    p.displayPlaylist();
+
+    p.removeSong("song2");
+    p.playSong("song3");
+    p.displayPlaylist();
+
+    return 0;
+}
