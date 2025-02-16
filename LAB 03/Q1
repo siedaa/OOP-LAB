@@ -1,0 +1,93 @@
+#include <iostream>
+using namespace std;
+
+class Wallet {
+    string ownerName;
+    float totalBalance;
+    string transactionHistory[100];
+    int count;
+
+public:
+    // Constructor
+    Wallet() {
+        count = 0;
+        totalBalance = 0;
+    }
+
+    void setOwnerName(string name) {
+        ownerName = name;
+    }
+
+    void transactionFunction(string sentence) {
+        if (count < 100) {
+            transactionHistory[count] = sentence;
+            count++;
+        } else {
+            cout << "Transaction history full!" << endl;
+        }
+    }
+
+    void addMoney() {
+        float amount;
+        cout << "Enter the amount you want to add: ";
+        cin >> amount;
+        if (amount > 0) {
+            totalBalance += amount;
+            transactionFunction("Added: " + to_string(amount));
+            cout << "Amount added successfully!" << endl;
+        } else {
+            cout << "Invalid amount!" << endl;
+        }
+    }
+
+    void spendMoney() {
+        float amount;
+        cout << "Enter the amount you want to spend: ";
+        cin >> amount;
+
+        if (amount > 0 && amount <= totalBalance) {
+            totalBalance -= amount;
+            transactionFunction("Spent: " + to_string(amount));
+            cout << "You spent " << amount << " successfully!" << endl;
+
+            // Low balance warning
+            if (totalBalance < 100) {
+                cout << "Warning! Low balance: " << totalBalance << endl;
+            }
+        } else {
+            cout << "Invalid amount! Current balance: " << totalBalance << endl;
+        }
+    }
+
+    void displayTransactionHistory() {
+        cout << "----------------- Transaction History -----------------" << endl;
+        cout << "Owner: " << ownerName << endl;
+        cout << "Current Balance: " << totalBalance << endl;
+        if (count == 0) {
+            cout << "No transactions recorded yet!" << endl;
+        } else {
+            for (int i = 0; i < count; i++) {
+                cout << transactionHistory[i] << endl;
+            }
+        }
+        cout << "------------------------------------------------------" << endl;
+    }
+
+    float getBalance() {
+        return totalBalance;
+    }
+};
+
+int main() {
+    Wallet w1;
+    w1.setOwnerName("Saad");
+
+    w1.addMoney();
+    w1.spendMoney();
+    w1.addMoney();
+    w1.spendMoney();
+
+    w1.displayTransactionHistory();
+
+    return 0;
+}
