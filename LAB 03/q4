@@ -1,0 +1,55 @@
+#include <iostream>
+using namespace std;
+#include <string>
+
+class car {
+    string brand;
+    string model;
+    float fuelCapacity;    // Changed to float for consistency
+    float currentFuelLevel;
+
+public:
+    car(string b, string m, float f, float c) {
+        brand = b;
+        model = m;
+        fuelCapacity = f;
+        currentFuelLevel = c;
+    }
+
+    void driveCar(float fuelUsed) {
+        if (fuelUsed > currentFuelLevel) {  // Fixed incorrect condition
+            cout << "You don't have enough fuel to drive the car." << endl;
+        } else {
+            currentFuelLevel -= fuelUsed;
+            cout << "You have used " << fuelUsed << " liters." << endl;
+        }
+        checkFuelStatus();
+    }
+
+    void refuelTank(float fuelAdded) {
+        if (currentFuelLevel + fuelAdded > fuelCapacity) {
+            currentFuelLevel = fuelCapacity;
+            cout << "Your fuel tank is full." << endl;
+        } else {
+            currentFuelLevel += fuelAdded;
+            cout << "You have refueled your tank. Current fuel level: " << currentFuelLevel << " liters." << endl;
+        }
+    }
+
+    void checkFuelStatus() {
+        cout << "Your current fuel level is: " << currentFuelLevel << " liters." << endl;
+        if (currentFuelLevel < 5) {
+            cout << "WARNING! Your fuel level is low." << endl;
+        }
+    }
+};
+
+int main() {
+    car Zoya("Toyota", "Corolla", 50.0, 50.0); // Fixed data type mismatch
+
+    Zoya.driveCar(20);  // 20 liters used
+    Zoya.refuelTank(10); // 10 liters added
+    Zoya.checkFuelStatus();
+
+    return 0;
+}
