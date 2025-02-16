@@ -1,0 +1,71 @@
+#include<iostream> 
+using namespace std;
+
+class FitnessTracker {
+    string userName;
+    int dailyStepGoal;
+    int stepsTaken;
+    double caloriesBurned;
+public:
+
+//  constructor : 
+FitnessTracker(string name , int goal) {
+        userName=name;
+        dailyStepGoal= goal;
+        stepsTaken=0;
+        caloriesBurned=0.0;
+    }
+
+    void logSteps(int steps) {
+        stepsTaken+=steps;
+        caloriesBurned+=steps*0.04;    // Assuming 0.04 calories burned per step
+    }
+
+    bool isGoalAchieved() {  
+        return stepsTaken>=dailyStepGoal;
+    }
+
+    void displayProgress() {
+        cout<<"name : "<<userName<<endl;
+        cout<<"daily step goal : "<<dailyStepGoal<<endl;
+        cout<<"steps taken : "<<stepsTaken<<endl;
+        cout<<"calories burned : "<<caloriesBurned<<endl;
+    
+      if (isGoalAchieved()) {  // Updated function name
+          cout<<"Congratulations! You have achieved your goal"<<endl;
+      }
+      else {
+          cout<<"You are "<<dailyStepGoal-stepsTaken<<" steps away from your goal"<<endl;
+      }
+    }
+
+    void resetDailyProgress() {  
+        stepsTaken = 0;
+        caloriesBurned = 0.0;
+    }
+};
+
+int main () {
+    
+    FitnessTracker laiba ("Laiba" , 10000);
+
+    cout<<"`````````````````````````````````````````````````first day```````````````````````````````````````````"<<endl;
+
+    laiba.logSteps(3000);
+    laiba.displayProgress();
+    laiba.resetDailyProgress(); // Reset progress for the next day
+
+    cout<<"`````````````````````````````````````````````````second day```````````````````````````````````````````"<<endl;
+
+    laiba.logSteps(6000);
+    laiba.displayProgress();
+    laiba.resetDailyProgress(); // Reset progress for the next day
+
+    cout<<"`````````````````````````````````````````````````third day```````````````````````````````````````````"<<endl;
+
+    laiba.logSteps(1000);
+    laiba.displayProgress();
+    laiba.resetDailyProgress(); // Reset progress for the next day
+
+    return 0;
+}
