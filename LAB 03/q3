@@ -1,0 +1,205 @@
+#include <iostream>
+using namespace std;
+#include <string>
+
+class books {
+public:
+    int ID;
+    string BookName;
+    string authorName;
+    string genre;
+    bool isBorrowed;
+
+    // Default constructor
+    books() {
+        ID = 0;
+        BookName = "";
+        authorName = "";
+        genre = "";
+        isBorrowed = false;
+    }
+
+    // Parameterized constructor
+    books(int id, string name, string author, string Genre, bool borrowed) {
+        ID = id;
+        BookName = name;
+        authorName = author;
+        genre = Genre;
+        isBorrowed = borrowed;
+    }
+};
+
+class library {
+    books bookList[100];
+    books borrowedBooks[100];
+    books availableBooks[100];
+    int totalBooks;
+    int totalBorrowedBooks;
+    int totalAvailableBooks;
+
+public:
+    // Default constructor
+    library() {
+        totalBooks = 0;
+        totalBorrowedBooks = 0;
+        totalAvailableBooks = 0;
+    }
+
+    void AddBooks(int id, string name, string author, string Genre) {
+        if (totalBooks < 100) {
+            bookList[totalBooks] = books(id, name, author, Genre, false);
+            availableBooks[totalAvailableBooks] = books(id, name, author, Genre, false);
+            totalBooks++;
+            totalAvailableBooks++;
+            cout << "Book: " << name << " added successfully" << endl;
+            cout << "--------------------------------------------------------------" << endl;
+        } else {
+            cout << "Library is full" << endl;
+        }
+    }
+
+    void lendBooks(int id) {
+        int flag = 0;
+        if (totalAvailableBooks > 0) {
+            for (int i = 0; i < totalAvailableBooks; i++) {
+                if (availableBooks[i].ID == id) {
+                    cout << "Searching for the book with ID #: " << id << endl;
+                    cout << "--------------------------------------------------------------" << endl;
+                    cout << "Book is available for borrowing." << endl;
+
+                    borrowedBooks[totalBorrowedBooks] = availableBooks[i];
+                    borrowedBooks[totalBorrowedBooks].isBorrowed = true;
+                    totalBorrowedBooks++;
+                    flag = 1;
+
+                    // Remove borrowed book from availableBooks list
+                    for (int j = i; j < totalAvailableBooks - 1; j++) {
+                        availableBooks[j] = availableBooks[j + 1];
+                    }
+
+                    totalAvailableBooks--;
+                    cout << "Book: " << borrowedBooks[totalBorrowedBooks - 1].BookName << " borrowed successfully." << endl;
+                    break;  // Stop searching once book is found
+                }
+            }
+        }
+
+        if (flag == 0) {
+            cout << "Book is not available for borrowing." << endl;
+        }
+    }
+
+    void returnBooks(int id) {
+        int flag = 0;
+        if (totalAvailableBooks < 100) {
+            for (int i = 0; i < totalBorrowedBooks; i++) {
+                if (borrowedBooks[i].ID == id) {
+                    cout << "Searching for the book with ID #: " << id << endl;
+                    cout << "--------------------------------------------------------------" << endl;
+                    cout << "Book is in the list to be returned." << endl;
+
+                    availableBooks[totalAvailableBooks] = borrowedBooks[i];
+                    availableBooks[totalAvailableBooks].isBorrowed = false;
+                    totalAvailableBooks++;
+                    flag = 1;
+
+                    // Remove returned book from borrowedBooks list
+                    for (int j = i; j < totalBorrowedBooks - 1; j++) {
+                        borrowedBooks[j] = borrowedBooks[j + 1];
+                    }
+
+                    totalBorrowedBooks--;
+                    cout << "Book: " << availableBooks[totalAvailableBooks - 1].BookName << " returned successfully." << endl;
+                    break;  // Stop searching once book is found
+                }
+            }
+        } else {
+            cout << "Library is full." << endl;
+        }
+
+        if (flag == 0) {
+            cout << "No such book to be returned." << endl;
+        }
+    }
+
+    void displayBooks() {
+        while (true) {
+            int choice;
+            cout << "Which books would you like to see?" << endl;
+            cout << "1. Total books list" << endl;
+            cout << "2. Available books list" << endl;
+            cout << "3. Borrowed books list" << endl;
+            cout << "4. Exit" << endl;
+
+            cin >> choice;
+
+            switch (choice) {
+                case 1:
+                    if (totalBooks == 0) {
+                        cout << "No books in the library." << endl;
+                    } else {
+                        for (int i = 0; i < totalBooks; i++) {
+                            cout << "BOOK# : " << i + 1 << endl;
+                            cout << "ID : " << bookList[i].ID << endl;
+                            cout << "Name : " << bookList[i].BookName << endl;
+                            cout << "Author : " << bookList[i].authorName << endl;
+                            cout << "Genre : " << bookList[i].genre << endl;
+                            cout << "Is borrowed : " << bookList[i].isBorrowed << endl;
+                            cout << "--------------------------------------------------------------" << endl;
+                        }
+                    }
+                    break;
+
+                case 2:
+                    if (totalAvailableBooks == 0) {
+                        cout << "No available books in the library." << endl;
+                    } else {
+                        for (int i = 0; i < totalAvailableBooks; i++) {
+                            cout << "BOOK# : " << i + 1 << endl;
+                            cout << "ID : " << availableBooks[i].ID << endl;
+                            cout << "Name : " << availableBooks[i].BookName << endl;
+                            cout << "Author : " << availableBooks[i].authorName << endl;
+                            cout << "Genre : " << availableBooks[i].genre << endl;
+                            cout << "Is borrowed : " << availableBooks[i].isBorrowed << endl;
+                            cout << "--------------------------------------------------------------" << endl;
+                        }
+                    }
+                    break;
+
+                case 3:
+                    if (totalBorrowedBooks == 0) {
+                        cout << "No borrowed books in the library." << endl;
+                    } else {
+                        for (int i = 0; i < totalBorrowedBooks; i++) {
+                            cout << "BOOK# : " << i + 1 << endl;
+                            cout << "ID : " << borrowedBooks[i].ID << endl;
+                            cout << "Name : " << borrowedBooks[i].BookName << endl;
+                            cout << "Author : " << borrowedBooks[i].authorName << endl;
+                            cout << "Genre : " << borrowedBooks[i].genre << endl;
+                            cout << "Is borrowed : " << borrowedBooks[i].isBorrowed << endl;
+                            cout << "--------------------------------------------------------------" << endl;
+                        }
+                    }
+                    break;
+
+                case 4:
+                    cout << "Exiting the program." << endl;
+                    return;
+
+                default:
+                    cout << "Invalid choice. Please try again." << endl;
+                    break;
+            }
+        }
+    }
+};
+
+int main() {
+    library l1;
+    l1.AddBooks(1, "The Alchemist", "Paulo Coelho", "Adventure");
+    l1.lendBooks(1);
+    l1.returnBooks(1);
+    l1.displayBooks();
+
+    return 0;
+}
