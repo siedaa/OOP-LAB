@@ -1,0 +1,132 @@
+#include <iostream>
+using namespace std;
+
+class car
+{
+    string brand;
+    string model;
+    double rentalPrice;
+    bool availabilityStatus;
+    int totalDays;
+
+public:
+
+//  parametrized constructor
+car (string b, string m, double r, bool s)
+    {
+        brand = b;
+        model = m;
+        rentalPrice = r;
+        availabilityStatus = s;
+    }
+
+    // copy constructor;
+car(const car &b) {
+    brand = b.brand;
+    model = b.model;
+    rentalPrice= b.rentalPrice;
+    availabilityStatus = b.availabilityStatus;
+
+}
+   
+     void updateDetails(string n, string m, double r, bool s)
+    {
+        brand = n;
+        model = m;
+        rentalPrice = r;
+        availabilityStatus = s;
+    }
+    void checkingAvailability () {
+        if (availabilityStatus) {
+            cout<<"the car "<<brand<<" is available for rent"<<endl;
+
+        }
+        else {
+            cout<<"the car "<<brand<<" is unavailable"<<endl;
+        }
+    }
+    void rentalRequest () {
+        if (availabilityStatus)  {
+            cout<<"the car "<<brand<<" is available for the rent....."<<endl;
+            cout<<"Enter the number of days you want to rent the "<<brand<<" car for: ";
+            cin>>totalDays;
+             cout<<"the car has been rented to you with :"<<ApplyDiscoutRent(totalDays)<<"% discount"<<endl;
+            availabilityStatus = false;
+
+        }
+        else {
+            cout<<"the car "<<brand<<" not available for the  rent"<<endl;
+        }
+
+
+    }
+
+    int ApplyDiscoutRent(int x) {
+        if (x > 5 && x <= 10) { 
+            return 5;
+        }
+        else if (x>10) {
+            return 10;
+        }
+        else {
+            return 0;
+        }
+    }
+    void displayDetails () {
+        cout<<"brand : " << brand << ", model : " << model << ", rental price: "<<rentalPrice << ",  availability status: "<<availabilityStatus<<endl;
+    }
+
+    ~ car() {
+        cout<<"car " <<brand<< " removed from the memory"<<endl;
+    }
+};
+
+int main () {
+    cout<<"initializes car1:"<<endl;
+    car c1 ("corolla", "Corolla", 1000.0, true);
+    cout<<endl;
+
+    cout<<"initilaizing car 2 thorugh copy constructor"<<endl;
+    car c2(c1);
+    // car c3(1);
+
+    // c1.updateDetails( "corolla", "Corolla", 1000.0, true);
+    // c2.updateDetails( "Toyota", "CorollaI", 10.0, true);
+    // c3.updateDetails( "BMW", "CorollaII", 100.0, true);
+    // c1.rentalRequest();
+    cout<<endl;
+
+    cout<<" we will check the details for the first car: "<<endl;
+    c1.displayDetails ();
+
+    cout<<endl;
+
+    cout<<"now we will check the details for the second car: "<<endl;
+    // c2.rentalRequest();
+    c2.displayDetails ();
+    cout<<endl;
+
+    cout<<"they both shows same data because the second car copied the date of first car throuhgh copy constructor"<<endl;
+    cout<<endl;
+
+    cout<<"updating the details of car 1:"<<endl;
+    // c3.rentalRequest();
+    // c3.checkingAvailability ();
+    cout<<endl;
+    c1.updateDetails("Toyota", "CorollaI", 10.0, false);
+    cout<<endl;
+
+    cout<<"checking the details for car 1: "<<endl;
+    c1.displayDetails();
+    cout<<endl;
+
+    cout<<"checking the details for car 2: "<<endl;
+
+    c2.displayDetails();
+    cout<<endl;
+    cout<<"hence the both details differ , verified that the copied car details remained unchanged"<<endl;
+    cout<<endl;
+    
+
+    return 0;
+}
