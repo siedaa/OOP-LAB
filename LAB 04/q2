@@ -1,0 +1,95 @@
+#include <iostream>
+using namespace std;
+
+class car
+{
+    string brand;
+    string model;
+    double rentalPrice;
+    bool availabilityStatus;
+    int totalDays;
+
+public:
+car (string b, string m, double r, bool s)
+    {
+        brand = b;
+        model = m;
+        rentalPrice = r;
+        availabilityStatus = s;
+    }
+   
+     void updateDetails(string n, string m, double r, bool s)
+    {
+        brand = n;
+        model = m;
+        rentalPrice = r;
+        availabilityStatus = s;
+    }
+    void checkingAvailability () {
+        if (availabilityStatus) {
+            cout<<"the car "<<brand<<" is available for rent"<<endl;
+
+        }
+        else {
+            cout<<"the car "<<brand<<" is unavailable"<<endl;
+        }
+    }
+    void rentalRequest () {
+        if (availabilityStatus)  {
+            cout<<"the car "<<brand<<" is available for the rent....."<<endl;
+            cout<<"Enter the number of days you want to rent the "<<brand<<" car for: ";
+            cin>>totalDays;
+             cout<<"the car has been rented to you with :"<<ApplyDiscoutRent(totalDays)<<"% discount"<<endl;
+            availabilityStatus = false;
+
+        }
+        else {
+            cout<<"the car "<<brand<<" not available for the  rent"<<endl;
+        }
+
+
+    }
+
+    int ApplyDiscoutRent(int x) {
+        if (x > 5 && x <= 10) { 
+            return 5;
+        }
+        else if (x>10) {
+            return 10;
+        }
+        else {
+            return 0;
+        }
+    }
+};
+
+int main () {
+    car c1 ("corolla", "Corolla", 1000.0, true);
+    car c2( "Toyota", "CorollaI", 10.0, true);
+    car c3( "BMW", "CorollaII", 100.0, true);
+
+    // c1.updateDetails( "corolla", "Corolla", 1000.0, true);
+    // c2.updateDetails( "Toyota", "CorollaI", 10.0, true);
+    // c3.updateDetails( "BMW", "CorollaII", 100.0, true);
+
+    cout<<"requesting to rent car 1"<<endl;
+    c1.rentalRequest();
+
+    cout<<"checking the availibitly for the car after renting"<<endl;
+    c1.checkingAvailability ();
+
+    cout<<"requesting to rent car 2"<<endl;
+    c2.rentalRequest();
+
+    cout<<"checking the availibitly for the car after renting"<<endl;
+    c2.checkingAvailability ();
+
+    cout<<"requesting to rent car 3"<<endl;
+    c3.rentalRequest();
+
+    cout<<"checking the availibitly for the car after renting"<<endl;
+    c3.checkingAvailability ();
+
+    cout<<"requesting to rent car 1"<<endl;
+    c1.rentalRequest();
+}
