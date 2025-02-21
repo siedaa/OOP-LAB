@@ -1,0 +1,68 @@
+#include <iostream>
+using namespace std;
+
+class car
+{
+    string brand;
+    string model;
+    double rentalPrice;
+    bool availabilityStatus;
+
+public:
+car ()
+    {
+        brand = "unknown";
+        model = "generic";
+        rentalPrice = 0.0;
+        availabilityStatus = true;
+    }
+     void updateDetails(string n, string m, double r, bool s)
+    {
+        brand = n;
+        model = m;
+        rentalPrice = r;
+        availabilityStatus = s;
+    }
+    void checkingAvailability () {
+        if (availabilityStatus) {
+         
+            cout<<"the car " << brand << " is available for rent"<<endl;
+
+        }
+        else {
+            cout<<"the car " << brand << " is unavailable"<<endl;
+        }
+    }
+    void rentalRequest () {
+        if (availabilityStatus)  {
+            cout<<"the car " << brand << " is rented to you"<<endl;
+            availabilityStatus = false;
+
+        }
+        else {
+            cout<<"the car " << brand << "  is not available for the  rent"<<endl;
+        }
+
+    }
+};
+
+int main () {
+    car c1;
+    car c2;
+    car c3;
+
+    c1.updateDetails( "corolla", "Corolla", 1000.0, true);
+    c2.updateDetails( "Toyota", "Corolla", 1000.0, true);
+    c3.updateDetails( "BMW", "Corolla", 1000.0, true);
+    c1.checkingAvailability ();
+    c1.rentalRequest();
+    c2.checkingAvailability ();
+    c2.rentalRequest();
+    c3.checkingAvailability ();
+    c3.rentalRequest();
+
+    c1.checkingAvailability ();
+    c2.checkingAvailability ();
+    c3.checkingAvailability ();
+}
+
