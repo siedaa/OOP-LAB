@@ -1,0 +1,48 @@
+#include<iostream>
+using namespace std;
+  
+class vehicle {
+    protected:
+    string brand;
+    int speed;
+
+    public:
+    vehicle (string brand , int speed) : brand (brand)  , speed (speed) {}
+
+    void display_details () {
+        cout<<"-------------------------------------------"<<endl;
+        cout<<"brand of the vehicle is : " <<brand<<endl;
+        cout<<"speed of the vehicle is : " <<speed<<endl;
+    }
+};
+
+class car : public vehicle {
+    protected :
+    int seats;
+    
+    public:
+    car  (string brand , int speed , int seats) : vehicle (brand ,speed ) , seats (seats) {}  
+    void display_details() {
+        vehicle ::display_details();
+        cout<<"number of seats in the car is : " <<seats<<endl;
+    }
+};
+
+class electricCar : public car {
+    int batteryLife;
+    public:
+     electricCar (string brand , int speed , int seats , int batteryLife) : car (brand , speed , seats) , batteryLife (batteryLife) {}
+
+    void display_details () {
+        car :: display_details();
+        cout<<"battery life of the electric car is : " <<batteryLife<<endl;
+    }
+
+};
+
+int main () {
+    electricCar e1 ("Tesla" , 200 , 4 , 100);
+    e1.display_details();
+    return 0;
+
+}
