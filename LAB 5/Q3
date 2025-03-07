@@ -1,0 +1,129 @@
+#include <iostream>
+using namespace std;
+
+class project;  // Forward declaration
+
+class employee {
+    string name;
+    string designation;
+    project *p[10];  
+    int totalProjects;
+
+public:
+    employee(string name, string designation) : name(name), designation(designation), totalProjects(0) {
+        for (int i = 0; i < 10; i++) p[i] = nullptr;  // Initialize array
+        cout << "Employee created: " << name << endl;
+    }
+
+    string get_name() const { return name; }
+    string get_designation() const { return designation; }
+
+    bool assignProject(project *newProject);
+    void displayEmployeeDetails() const;
+
+    ~employee() { cout << "Employee " << name << " deleted." << endl; }
+};
+
+class project {
+    string title;
+    string deadline;
+    int totalEmployees;
+    employee *E[10];
+
+public:
+    project(string title, string deadline) : title(title), deadline(deadline), totalEmployees(0) {
+        for (int i = 0; i < 10; i++) E[i] = nullptr;
+        cout << "Project created: " << title << endl;
+    }
+
+    string get_title() const { return title; }
+    string get_deadline() const { return deadline; }
+
+    void addEmployee(employee *e1);
+    void displayProjectDetails() const;
+
+    ~project() { cout << "Project " << title << " deleted." << endl; }
+};
+
+bool employee::assignProject(project *newProject) {
+    if (totalProjects >= 10) {
+        cout << "Employee is already working on 10 projects. Cannot add more." << endl;
+        return false;
+    }
+    for (int i = 0; i < totalProjects; i++) {
+        if (p[i] == newProject) {
+            cout << "Employee is already assigned to this project." << endl;
+            return false;
+        }
+    }
+    p[totalProjects++] = newProject;
+    cout << "Project added to employee's list." << endl;
+    return true;
+}
+
+void employee::displayEmployeeDetails() const {
+    cout << "---------------------------------------" << endl;
+    cout << "Employee Name: " << name << endl;
+    cout << "Designation: " << designation << endl;
+    cout << "Total Projects: " << totalProjects << endl;
+    for (int i = 0; i < totalProjects; i++) {
+        cout << "- " << p[i]->get_title() << " (Deadline: " << p[i]->get_deadline() << ")" << endl;
+    }
+}
+
+void project::addEmployee(employee *e1) {
+    if (totalEmployees >= 10) {
+        cout << "Project has reached the maximum employee limit!" << endl;
+        return;
+    }
+    for (int i = 0; i < totalEmployees; i++) {
+        if (E[i] == e1) {
+            cout << "Employee is already assigned to this project!" << endl;
+            return;
+        }
+    }
+    if (e1->assignProject(this)) {
+        E[totalEmployees++] = e1;
+        cout << "Employee successfully added to the project." << endl;
+    }
+}
+
+void project::displayProjectDetails() const {
+    cout << "---------------------------------------" << endl;
+    cout << "Project Title: " << title << endl;
+    cout << "Deadline: " << deadline << endl;
+    cout << "Total Employees: " << totalEmployees << endl;
+    for (int i = 0; i < totalEmployees; i++) {
+        cout << "- " << E[i]->get_name() << " (" << E[i]->get_designation() << ")" << endl;
+    }
+}
+
+int main() {
+    employee A("Ali", "Manager");
+    employee B("Ahmed", "Developer");
+    employee C("Asad", "Designer");
+
+    project P1("Project 1", "1st Jan 2022");
+    project P2("Project 2", "1st Feb 2022");
+
+    P1.addEmployee(&C);
+    P1.addEmployee(&A);
+    P1.addEmployee(&B);
+    P2.addEmployee(&A);
+    P2.addEmployee(&B);
+    P2.addEmployee(&C);
+
+    cout << "Trying to add C into Project 2 again..." << endl;
+    P2.addEmployee(&C);
+
+    cout << "\nDisplaying Employee Details..." << endl;
+    A.displayEmployeeDetails();
+    B.displayEmployeeDetails();
+    C.displayEmployeeDetails();
+
+    cout << "\nDisplaying Project Details..." << endl;
+    P1.displayProjectDetails();
+    P2.displayProjectDetails();
+
+    return 0;
+}
