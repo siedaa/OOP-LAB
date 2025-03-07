@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+
+class student {
+    int id;
+    string name;
+    int sub;
+    float *scores;  
+
+public:
+   
+    student(int id, string name) : id(id), name(name) {
+        cout << "Enter total subjects: ";
+        cin >> sub;
+        scores = new float[sub];  
+
+        for (int i = 0; i < sub; i++) {
+            cout << "Enter score for subject " << i + 1 << ": ";
+            cin >> scores[i];  
+        }
+    }
+
+    
+    student(const student &b) {
+        id = b.id;
+        name = b.name;
+        sub = b.sub; 
+
+        scores = new float[sub];  
+        for (int i = 0; i < sub; i++) {
+            scores[i] = b.scores[i];  
+        }
+    }
+
+    // ✅ Display Function
+    void display_details() const {
+        cout << "--------------------------------------" << endl;
+        cout << "ID: " << id << endl;
+        cout << "Name: " << name << endl;
+        for (int i = 0; i < sub; i++) {
+            cout << "Score of subject " << i + 1 << ": " << scores[i] << endl;
+        }
+    }
+
+    
+    ~student() {
+        delete[] scores;  
+    }
+};
+
+int main() {
+    student A(1, "Ali");
+    student B(A);  // ✅ Deep copy
+
+    cout << "\nDisplaying details of original student: " << endl;
+    A.display_details();
+
+    cout << "\nDisplaying details of copied student: " << endl;
+    B.display_details();
+
+    return 0;
+}
