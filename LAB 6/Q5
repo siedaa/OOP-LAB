@@ -1,0 +1,71 @@
+#include<iostream>
+using namespace std;
+
+class device {
+    protected:
+int deviceID;
+bool status;
+
+public:
+device(int deviceID , bool status) : deviceID (deviceID) , status(status) {} 
+
+void display_details() {
+    cout<<"id of the device is  : " <<deviceID<<endl;
+    cout<<"status of the device is " <<status<<endl;
+}
+
+};
+
+class smartPhone : virtual public device {
+    protected:
+float screenSize ;
+
+public:
+
+smartPhone (int deviceID , bool status , float screenSize) : device (deviceID , status) , screenSize(screenSize) {}
+void display_details () {
+    device ::display_details();
+    cout<<"screen size of the device is  : " <<screenSize<<endl;
+
+
+}
+};
+
+class smartWatch : virtual public device{
+    protected:
+    bool heartRateMonitor ;
+
+    public: 
+    smartWatch (int deviceID , bool status  , bool heartRateMonitor) : device  (deviceID , status )  , heartRateMonitor(heartRateMonitor) {}
+    void display_details () {
+        device  ::display_details();
+        cout<<"heart rate monitor is : "<<( heartRateMonitor ? "enabled" : "disabled" ) <<endl;
+    }
+
+
+};
+
+class smartWearable : public smartPhone , public smartWatch{
+    int stepCounter ;
+
+    public:
+    smartWearable (int deviceID , bool status  , float screenSize,  bool heartRateMonitor,  int stepCounter) : 
+    device  (deviceID , status ),
+    smartPhone(deviceID , status , screenSize) ,
+     smartWatch (deviceID , status  , heartRateMonitor) , stepCounter(stepCounter) {}
+        void display_details () {
+            device ::display_details();
+
+            cout<<"screen size of the device is  : " <<screenSize<<endl;
+            cout<<"heart rate monitor is : "<<(heartRateMonitor ? "enabled" : "disabled" ) <<endl;
+            cout<<"step counter is : " <<stepCounter<<endl;
+        }
+    
+};
+
+int main () {
+    smartWearable s1 (1234 , 1 , 6.5 , 1 , 10000);
+    s1.display_details();
+    return 0;   
+
+}
