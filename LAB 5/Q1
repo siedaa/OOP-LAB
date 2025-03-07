@@ -1,0 +1,74 @@
+#include<iostream>
+using namespace std;
+
+class realEstateAgency {
+int ID;
+string address;
+string *ownersName;
+ 
+
+public: 
+realEstateAgency(int ID, string address, string name) : ID(ID) , address(address) 
+ {
+   
+     ownersName = new string (name);
+   
+ }
+
+
+
+ realEstateAgency (const realEstateAgency &B) {
+    ID= B.ID;
+    address = B.address;
+    ownersName = B.ownersName;
+  
+ }
+string change_Name (string name) {
+    *ownersName = name;
+    return *ownersName;
+ }
+ void display_details () {
+    cout<<"--------------------------------------"<<endl;
+    cout<<"ID: " <<ID<<endl;
+    cout<<"address : "<<address<<endl;
+    cout<<"name : "<<*ownersName<<endl;
+ }
+
+ ~realEstateAgency() {
+   
+    delete ownersName;
+   
+    }
+ 
+
+};
+
+// int realEstateAgency::count = 0;
+int main () {
+    realEstateAgency A(1 , "Lahore" , "Ali");
+    realEstateAgency B(A);  // Copy constructor
+    realEstateAgency C = A; // Copy constructor
+    realEstateAgency D(C);
+
+    cout<<"displaying the details of A"<<endl;
+    A.display_details();
+    cout<<"displaying the details of B"<<endl;
+    B.display_details();
+    cout<<"displaying the details of C"<<endl;
+    C.display_details();
+    cout<<"displaying the details of D"<<endl;
+    D.display_details();
+
+    cout<<endl<<"changing the name of A"<<endl;
+    A.change_Name("Ahmed");
+    cout<<"displaying the details of A"<<endl;
+    A.display_details();
+    cout<<"displaying the details of B"<<endl;
+    B.display_details();
+    cout<<"displaying the details of C"<<endl;
+    C.display_details();
+    cout<<"displaying the details of D"<<endl;
+    D.display_details();
+
+    return 0;
+}
