@@ -1,0 +1,82 @@
+#include<iostream>
+using namespace std;
+
+
+class level{
+    int levelNumber;
+    string difficulty;
+    int timeLimit;
+    int scoreRequired;
+    public:
+    level(int levelNumber, string difficulty, int timeLimit, int scoreRequired)
+        : levelNumber(levelNumber), difficulty(difficulty), timeLimit(timeLimit), scoreRequired(scoreRequired) {}
+     
+
+        void display_level_details () {
+            cout<<" level number: "<<levelNumber<<endl;
+            cout<<" difficulty: "<<difficulty<<endl;
+            cout<<" time limit: "<<timeLimit<<endl;
+            cout<<" score required: "<<scoreRequired<<endl;
+        }
+        int getLevelNumber() { return levelNumber; }
+        string getDifficulty() { return difficulty; }
+        int getTimeLimit() { return timeLimit; }
+        int getScoreRequired() { return scoreRequired; }
+
+
+};
+
+class videoGame {
+    string title;
+    string genre;
+    level *levels[100];
+    int totalLevels;
+
+    public:
+    videoGame(string title, string genre)
+        : title(title), genre(genre), totalLevels(0) {}
+        string getTitle() { return title; };
+
+        void addLevels (int levelNumber, string difficulty, int timeLimit, int scoreRequired){
+            if (totalLevels <100) {
+            levels[totalLevels] = new level(levelNumber, difficulty, timeLimit, scoreRequired);
+            totalLevels++;
+        }
+    
+    else {
+        cout << "Cannot add more levels" << endl;
+    }
+}
+
+
+    void display_details () {
+        cout<<" game title: "<<title<<endl;
+        cout<<" game genre: "<<genre<<endl;
+        cout<<" total levels: "<<totalLevels<<endl;
+        cout<<" levels details: "<<endl;
+        for (int i=0; i<totalLevels; i++){
+            cout<<"----------------------------------"<<endl;
+            cout<<" level number: "<<levels[i]->getLevelNumber()<<endl;
+            cout<<" difficulty: "<<levels[i]-> getDifficulty()<<endl;
+            cout<<" time limit: "<<levels[i]->getTimeLimit()<<endl;
+            cout<<" score required: "<<levels[i]->getScoreRequired()<<endl;
+        }
+    }
+
+    ~ videoGame () {
+        for (int i=0;i<totalLevels;i++){
+            delete levels[i];
+        }
+    }
+        
+
+        
+};
+int main () {
+    videoGame v1("Mario", "Adventure");
+    v1.addLevels(1, "easy", 10, 100);
+    v1.addLevels(2, "medium", 20, 200);
+    v1.addLevels(3, "hard", 30, 300);
+    v1.display_details();
+    return 0;
+}
