@@ -1,0 +1,92 @@
+#include <iostream>
+using namespace std;
+
+class Doctor {
+    string name;
+    string specialization;
+    int experience;
+
+public:
+    Doctor(string name, string specialization, int experience)
+        : name(name), specialization(specialization), experience(experience) {}
+
+    string getName() { return name; }
+    string getSpecialization() { return specialization; }
+    int getExperience() { return experience; }
+};
+
+class Hospital {
+    string hospitalName;
+    string location;
+    Doctor* doctors[100];
+    int totalDoctors;
+
+public:
+    Hospital(string hospitalName, string location)
+        : hospitalName(hospitalName), location(location), totalDoctors(0) {}
+        string getHospitalName() { return hospitalName; };
+
+    void addDoctor(Doctor* d) {
+        if (totalDoctors < 100) {
+            doctors[totalDoctors] = d;
+            totalDoctors++;
+            cout << "Doctor successfully added to " << hospitalName << " hospital.\n";
+        } else {
+            cout << "Cannot add more doctors!\n";
+        }
+    }
+
+    void displayHospitalDetails() const {
+        cout << "\n----------------------------------------\n";
+        cout << "Hospital Name: " << hospitalName << endl;
+        cout << "Location: " << location << endl;
+        cout << "----------------------------------------\n";
+
+        if (totalDoctors == 0) {
+            cout << "No doctors currently assigned.\n";
+        } else {
+            for (int i = 0; i < totalDoctors; i++) {
+                cout << "\nDoctor #" << i + 1 << ":\n";
+                cout << "Name: " << doctors[i]->getName() << endl;
+                cout << "Specialization: " << doctors[i]->getSpecialization() << endl;
+                cout << "Experience: " << doctors[i]->getExperience() << " years\n";
+            }
+        }
+    }
+};
+
+int main() {
+    // Creating doctors with real-world details
+    Doctor* d1 = new Doctor("Dr. Ali Khan", "Cardiologist", 15);
+    Doctor* d2 = new Doctor("Dr. Ahmed Raza", "Neurologist", 20);
+    Doctor* d3 = new Doctor("Dr. Syeda Maha Fatima", "General Physician", 10);
+    Doctor* d4 = new Doctor("Dr. Fatima Noor", "Dentist", 8);
+    Doctor* d5 = new Doctor("Dr. Sarah Malik", "Orthopedic Surgeon", 12);
+
+    // Creating hospitals with real-world names
+    Hospital h1("Agha Khan University Hospital", "Karachi");
+    Hospital h2("Shaukat Khanum Memorial Hospital", "Lahore");
+
+    // Assigning doctors to hospitals
+    cout << "Assigning doctors to " << h1.getHospitalName() << "...\n";
+    h1.addDoctor(d1);
+    h1.addDoctor(d3);
+    h1.addDoctor(d5);
+
+    cout << "\nAssigning doctors to " << h2.getHospitalName() << "...\n";
+    h2.addDoctor(d2);
+    h2.addDoctor(d4);
+
+    // Displaying hospital details
+    h1.displayHospitalDetails();
+    h2.displayHospitalDetails();
+
+    // Cleaning up memory
+    delete d1;
+    delete d2;
+    delete d3;
+    delete d4;
+    delete d5;
+
+    return 0;
+}
