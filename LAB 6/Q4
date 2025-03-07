@@ -1,0 +1,49 @@
+#include<iostream>
+using namespace std;
+class account {
+    protected:
+    int accountNumber;
+    float balance;
+
+    public:
+    account (int accountNumber , float balance) : accountNumber (accountNumber) , balance (balance) {}
+    void display_details () {
+        cout<<"-------------------------------------------"<<endl;
+        cout<<"account number of the account is : " <<accountNumber<<endl;
+        cout<<"balance of the account is : " <<balance<<endl;
+    }
+};
+
+class savingsAccount : public account {
+    protected:
+    float interestRate;
+    public:
+    savingsAccount ( int accountNumber , float balance , float interestRate) : account (accountNumber , balance) , interestRate (interestRate) {}
+    void display_details () {
+        account :: display_details();
+        cout<<"interest rate of the savings account is : " <<interestRate<<endl;
+    }
+};
+
+class checkingAccount : public account {
+    protected:
+    float overdraftLimit;
+    public:
+    checkingAccount (int accountNumber , float balance , float overdraftLimit) : account (accountNumber , balance) , overdraftLimit (overdraftLimit) {}
+    void display_details () {
+        account :: display_details();
+        cout<<"overdraft limit : " << overdraftLimit <<endl;
+
+    }
+};
+
+int main () {
+
+    savingsAccount s1 (1234 , 234.7889 , 25.56);
+    cout<<"saving account details : "<<endl;
+    s1.display_details();
+
+    checkingAccount c1 (2345 , 1000.456 , 5000.456);
+    cout<<"checking account details : "<<endl;
+    c1.display_details();
+}
