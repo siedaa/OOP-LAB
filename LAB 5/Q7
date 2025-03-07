@@ -1,0 +1,121 @@
+#include <iostream>
+using namespace std;
+class product
+{
+    int id;
+    string name;
+    int quantity;
+
+public:
+    product(int id, string name, int quantity) : id(id), name(name), quantity(quantity)
+    {
+    }
+    void display_product_details()
+    {
+        cout << " id: " << id << endl;
+        cout << " name: " << name << endl;
+        cout << " quantity: " << quantity << endl;
+    }
+    int getId() { return id; }
+    string getName() { return name; }
+    int getQuantity() { return quantity; }
+
+  
+    };
+
+    class inventory
+    {
+
+        product *products[100];
+        int totalProducts;
+
+    public:
+        inventory() : totalProducts(0) {}
+
+        void addProduct(int id, string name, int quantity)
+        {
+            if (totalProducts < 100)
+            {
+                products[totalProducts] = new product(id, name, quantity);
+                totalProducts++;
+                cout << "product added" << endl;
+            }
+            else
+            {
+                cout << "Cannot add more products" << endl;
+            }
+        }
+
+        void sortingProduct()
+        {
+            for (int i = 0; i < totalProducts - 1; i++)
+            {
+                for (int j = 0; j < totalProducts - i - 1; j++)
+                {
+                    if (products[j]->getName() > products[j + 1]->getName())
+                    {
+                        product* temp = products[j];
+                        products[j] = products[j + 1];
+                        products[j + 1] = temp;
+                    }
+                }
+            }
+            cout << "sorted products" << endl;
+        }
+
+        void searchProduct(int id)
+        {
+            bool found = 0;
+            for (int i = 0; i < totalProducts; i++)
+            {
+                if (products[i]->getId() == id)
+                {
+                    cout << "product found" << endl;
+                    products[i]->display_product_details();
+                    found = 1;
+                    break;
+                }
+            }
+
+            if (found == 0)
+            {
+
+                cout << "product not found" << endl;
+            }
+        
+        }
+        void display_details() {
+            cout << "total products: " << totalProducts << endl;
+            cout << "products details: " << endl;
+            for (int i = 0; i < totalProducts; i++) {
+                cout << "----------------------------------" << endl;
+                products[i]->display_product_details();
+            }
+        }
+
+        ~inventory()
+        {
+            for (int i = 0; i < totalProducts; i++)
+            {
+                delete products[i];
+    
+                cout << "product deleted" << endl;
+            }
+        }
+    };
+
+    int main()
+    {
+        inventory inv;
+        inv.addProduct(1, "furniture", 10);
+        inv.addProduct(2, "electronics", 20);
+        inv.addProduct(3, "clothing", 30);
+        inv.addProduct(4, "stationery", 40);
+        cout << "displaying details" << endl;
+inv.display_details();
+        inv.sortingProduct();
+        cout << "displaying details after sorting" << endl;
+        inv.display_details();
+        inv.searchProduct(3);
+        return 0;
+    }
