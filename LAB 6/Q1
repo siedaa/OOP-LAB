@@ -1,0 +1,39 @@
+#include<iostream>
+using namespace std;
+  
+class employee {
+    protected :
+string name;
+float salary;
+
+public:
+employee (string name , float salary) : name(name) , salary(salary) {}  
+
+void display_details () {
+    cout<<"-------------------------------------------"<<endl;
+    cout<<"name of the employee is : " <<name<<endl;
+    cout<<"salary of the employee is : " <<salary<<endl;
+}
+
+};
+
+class manager : public employee {
+    float bonus;
+
+    public:
+
+    manager (string name , float salary , float bonus ) : employee (name , salary) , bonus (bonus) {}
+
+
+    void display_details() {
+        employee ::display_details();
+        cout<<"bonus of the manager is : " <<bonus<<endl;
+    }
+};
+
+int main () {
+    manager m1("Rahul" , 50000 , 10000);
+    m1.display_details();
+    return 0;
+
+}
