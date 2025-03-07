@@ -1,0 +1,63 @@
+#include<iostream>
+using namespace std;
+
+class person {
+    protected:
+
+    string name;
+    int age;
+
+    public:
+    person (string name , int age) : name (name ) , age(age){}
+    void display_details () {
+        cout<<"-------------------------------------------"<<endl;
+        cout<<"name of the person is : " <<name<<endl;
+        cout<<"age of the person is : " <<age<<endl;
+    }
+};
+class teacher : virtual public person {
+    protected:
+    string subject;
+    public:
+teacher (string name , int age , string subject) : person (name , age) , subject (subject) {}
+   
+    void display_details () {
+        person :: display_details();
+        cout<<"subject of the teacher is : " <<subject<<endl;
+    }
+};
+
+class researcher : virtual public person{
+    protected:
+    string researchArea;
+    public:
+    researcher (string name , int age , string researchArea) : person (name , age), researchArea (researchArea) {}
+    void display_details () {
+        person :: display_details();
+        cout<<"research area of the researcher is : " <<researchArea<<endl;
+    }
+};
+
+class professor : public teacher , public researcher {
+    int publications ;
+    public:
+    professor (string name , int age , string subject , string researchArea , int publications) : 
+    person (name , age) ,
+    teacher (name , age , subject) , 
+    researcher (name , age  , researchArea) ,
+     publications (publications) {}
+
+    void display_details () {
+        person ::display_details();
+        cout<<"subject of the teacher is : " <<subject<<endl;
+        cout<<"research area of the researcher is : " <<researchArea<<endl;
+        cout<<"number of publications of the professor is : " <<publications<<endl;
+    }
+
+};
+
+int main () {
+    professor p1 ("maha" , 40 , "Maths" , "Algebra" , 10);
+    p1.display_details();
+    return 0;
+}
