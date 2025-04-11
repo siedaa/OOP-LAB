@@ -1,0 +1,153 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Base class
+class Person {
+protected:
+    string name, contactNumber, address;
+    int age;
+public:
+    virtual void displayInfo() {
+        cout << "Name: " << name << endl;
+        cout << "Age: " << age << endl;
+        cout << "Contact Number: " << contactNumber << endl;
+        cout << "Address: " << address << endl;
+    }
+
+    virtual void updateInfo() {
+        cout << "Enter Name: ";
+        cin.ignore();
+        getline(cin, name);
+        cout << "Enter Age: ";
+        cin >> age;
+        cout << "Enter Contact Number: ";
+        cin >> contactNumber;
+        cout << "Enter Address: ";
+        cin.ignore();
+        getline(cin, address);
+    }
+};
+
+// Derived class: Patient
+class Patient : public Person {
+private:
+    string patientID, medicalHistory, doctorAssigned;
+public:
+    void displayInfo() override {
+        Person::displayInfo();
+        cout << "Patient ID: " << patientID << endl;
+        cout << "Doctor Assigned: " << doctorAssigned << endl;
+        cout << "Medical History: " << medicalHistory << endl;
+    }
+
+    void updateInfo() override {
+        Person::updateInfo();
+        cout << "Enter Patient ID: ";
+        getline(cin, patientID);
+        cout << "Enter Doctor Assigned: ";
+        getline(cin, doctorAssigned);
+        cout << "Enter Medical History: ";
+        getline(cin, medicalHistory);
+    }
+};
+
+// Derived class: Doctor
+class Doctor : public Person {
+private:
+    string specialization;
+    float consultationFee;
+    string patient1, patient2, patient3;
+public:
+    void displayInfo() override {
+        Person::displayInfo();
+        cout << "Specialization: " << specialization << endl;
+        cout << "Consultation Fee: " << consultationFee << endl;
+        cout << "Patients: " << patient1 << ", " << patient2 << ", " << patient3 << endl;
+    }
+
+    void updateInfo() override {
+        Person::updateInfo();
+        cout << "Enter Specialization: ";
+        getline(cin, specialization);
+        cout << "Enter Consultation Fee: ";
+        cin >> consultationFee;
+        cin.ignore();
+        cout << "Enter Patient 1 Name: ";
+        getline(cin, patient1);
+        cout << "Enter Patient 2 Name: ";
+        getline(cin, patient2);
+        cout << "Enter Patient 3 Name: ";
+        getline(cin, patient3);
+    }
+};
+
+// Derived class: Nurse
+class Nurse : public Person {
+private:
+    string assignedWard, shiftTimings;
+public:
+    void displayInfo() override {
+        Person::displayInfo();
+        cout << "Assigned Ward: " << assignedWard << endl;
+        cout << "Shift Timings: " << shiftTimings << endl;
+    }
+
+    void updateInfo() override {
+        Person::updateInfo();
+        cout << "Enter Assigned Ward: ";
+        getline(cin, assignedWard);
+        cout << "Enter Shift Timings: ";
+        getline(cin, shiftTimings);
+    }
+};
+
+// Derived class: Administrator
+class Administrator : public Person {
+private:
+    string department;
+    float salary;
+public:
+    void displayInfo() override {
+        Person::displayInfo();
+        cout << "Department: " << department << endl;
+        cout << "Salary: " << salary << endl;
+    }
+
+    void updateInfo() override {
+        Person::updateInfo();
+        cout << "Enter Department: ";
+        getline(cin, department);
+        cout << "Enter Salary: ";
+        cin >> salary;
+    }
+};
+
+int main() {
+    Patient p;
+    Doctor d;
+    Nurse n;
+    Administrator a;
+
+    cout << "------ Enter Patient Info ------" << endl;
+    p.updateInfo();
+    cout << "\n------ Patient Info ------" << endl;
+    p.displayInfo();
+
+    cout << "\n------ Enter Doctor Info ------" << endl;
+    d.updateInfo();
+    cout << "\n------ Doctor Info ------" << endl;
+    d.displayInfo();
+
+    cout << "\n------ Enter Nurse Info ------" << endl;
+    n.updateInfo();
+    cout << "\n------ Nurse Info ------" << endl;
+    n.displayInfo();
+
+    cout << "\n------ Enter Administrator Info ------" << endl;
+    a.updateInfo();
+    cout << "\n------ Administrator Info ------" << endl;
+    a.displayInfo();
+
+    return 0;
+}
