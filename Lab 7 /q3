@@ -1,0 +1,108 @@
+# include<iostream>
+using namespace std;
+
+class ticket {
+    protected: 
+    int ticketID;
+    string passengerName;
+    float price;
+    string date;
+    string destination;
+
+    public:
+    ticket(int id, string name, float price, string date, string destination) : ticketID(id), passengerName(name), price(price), date(date), destination(destination) {
+        
+    }
+    void reserve() {
+        cout << "Ticket reserved for " << passengerName << " on " << date << " to " << destination << endl;
+
+    }
+     void cancel() {
+        cout << "Ticket cancelled for " << passengerName << endl;
+    }
+     void display() {
+        cout << "Ticket ID: " << ticketID << endl;
+        cout << "Passenger Name: " << passengerName << endl;
+        cout << "Price: $" << price << endl;
+        cout << "Date: " << date << endl;
+        cout << "Destination: " << destination << endl;
+    }
+};
+
+class flightTicket : public ticket {
+    string airlineName;
+    int flightNumber;
+    int seatClass;
+    
+    
+    public:
+    flightTicket(int id, string name, float price, string date, string destination,string airlineName, int flightNumber , int seatClass ) : ticket(id, name, price, date, destination), airlineName(airlineName), flightNumber(flightNumber), seatClass(seatClass) {
+    }
+
+void display()  {
+        ticket::display();
+        cout << "Airline Name: " << airlineName << endl;
+        cout << "Flight Number: " << flightNumber << endl;
+        cout << "Seat Class: " << seatClass << endl;
+    }
+   
+};
+
+class trainTicket : public ticket {
+    int trainNumber;
+    string coachType;
+    string departureTime;
+    
+    public:
+    trainTicket(int id, string name, float price, string date, string destination,int trainNumber, string coachType, string departureTime) : ticket(id, name, price, date, destination), trainNumber(trainNumber), coachType(coachType), departureTime(departureTime) {
+        
+    }
+    void reserve()  {
+        cout << "auto assigning seats " << coachType << endl;
+    }
+
+};
+class busTicket : public ticket {
+    string busCompany;
+    int seatNumber;
+    
+    public:
+    busTicket(int id, string name, float price, string date, string destination,string busCompany, int seatNumber) : ticket(id, name, price, date, destination), busCompany(busCompany), seatNumber(seatNumber) {
+        
+    }
+    void cancel()  {
+        cout << "updating cancel func to allow last-minute refunds " << endl;
+    }
+   
+};
+
+class concertTicket : public ticket {
+    string artistName;
+    string venue;
+    string seatType;
+    
+    public:
+    concertTicket(int id, string name, float price, string date, string destination,string artistName, string venue, string seatNumber) : ticket(id, name, price, date, destination), artistName(artistName), venue(venue), seatType(seatType) {
+        
+    }
+    void display() {
+        ticket::display();
+        cout << "Artist Name: " << artistName << endl;
+        cout << "Venue: " << venue << endl;
+        cout << "Seat Type: " << seatType << endl;
+    }
+};
+
+int main () {
+    flightTicket f1(101, "John Doe", 150.0, "2023-10-01", "New York", "Delta Airlines", 1234, 1);
+    trainTicket t1(102, "Jane Smith", 50.0, "2023-10-02", "Los Angeles", 5678, "Sleeper", "10:00 AM");      
+    busTicket b1(103, "Alice Johnson", 20.0, "2023-10-03", "Chicago", "Greyhound", 12);
+    concertTicket c1(104, "Bob Brown", 75.0, "2023-10-04", "Miami", "Taylor Swift", "Madison Square Garden", "VIP");    
+    f1.display();
+    t1.reserve();
+    b1.cancel();
+    c1.display();
+    return 0;
+
+}
+   
