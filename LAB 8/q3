@@ -1,0 +1,54 @@
+# include<iostream>
+using namespace std;
+#include<cmath>
+
+class vector2D{
+    float x;
+    float y;
+
+    public:
+    vector2D(float x , float y): x(x) , y(y){}
+    vector2D operator + (vector2D &v) {
+        return vector2D(x+v.x , y+v.y);
+    }
+    vector2D operator - (vector2D &v) {
+        return vector2D(x-v.x , y-v.y);
+    }
+    vector2D operator * (vector2D &v) {
+        return vector2D(x*v.x , y*v.y);
+    }
+
+    friend ostream& operator <<(ostream& os , const vector2D &v) ;
+    friend void dotProduct (vector2D &v1 , vector2D &v2);
+
+};
+void dotProduct (vector2D &v1 , vector2D &v2) {
+    float dot = v1.x * v2.x + v1.y * v2.y;
+    cout << "Dot product: " << dot << endl;
+}
+ostream& operator <<(ostream& os , const vector2D &v) {
+    os << v.x << "i + " <<v.y << "j" <<endl;
+    return os;
+}
+
+int main () {
+    vector2D v1(3,4);
+    vector2D v2(1,2);
+    cout<<"displaying using friend function"<<endl;
+    cout << "v1 = " << v1 << endl;
+    cout<<"v2 = " << v2<<endl;
+    
+    cout<<"adding using operator overloading"<<endl;
+    vector2D v3 = v1 + v2;  
+    cout <<endl<< "v1 + v2 = " << v3 << endl;
+    cout<<"subtracting using operator overloading"<<endl;
+    vector2D v4 = v1 - v2;
+    cout << endl<< "v1 - v2 = " << v4 << endl;
+    cout<<"multiplying using operator overloading"<<endl;
+    vector2D v5 = v1 * v2;
+    cout <<endl<< "v1 * v2 = " << v5 << endl;
+    dotProduct(v1 , v2);
+    cout << "v1 * v2 = " << v5 << endl;
+    cout<<"displaying using friend function"<<endl;
+    cout << "v1 = " << v1 << endl;
+}
