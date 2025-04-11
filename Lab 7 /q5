@@ -1,0 +1,170 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Base class
+class Character {
+protected:
+    string characterID, name, weaponType;
+    int level, healthPoints;
+public:
+    virtual void attack() {
+        cout << name << " performs a basic attack!" << endl;
+    }
+
+    virtual void defend() {
+        cout << name << " defends in a basic way!" << endl;
+    }
+
+    virtual void displayStats() {
+        cout << "Character ID: " << characterID << endl;
+        cout << "Name: " << name << endl;
+        cout << "Level: " << level << endl;
+        cout << "Health Points: " << healthPoints << endl;
+        cout << "Weapon Type: " << weaponType << endl;
+    }
+
+    void inputData() {
+        cout << "Enter Character ID: ";
+        cin >> characterID;
+        cout << "Enter Name: ";
+        cin.ignore();
+        getline(cin, name);
+        cout << "Enter Level: ";
+        cin >> level;
+        cout << "Enter Health Points: ";
+        cin >> healthPoints;
+        cout << "Enter Weapon Type: ";
+        cin.ignore();
+        getline(cin, weaponType);
+    }
+};
+
+// Warrior Class
+class Warrior : public Character {
+private:
+    int armorStrength, meleeDamage;
+public:
+    void attack() override {
+        cout << name << " performs a powerful melee attack!" << endl;
+    }
+
+    void inputData() {
+        Character::inputData();
+        cout << "Enter Armor Strength: ";
+        cin >> armorStrength;
+        cout << "Enter Melee Damage: ";
+        cin >> meleeDamage;
+    }
+
+    void displayStats() override {
+        Character::displayStats();
+        cout << "Armor Strength: " << armorStrength << endl;
+        cout << "Melee Damage: " << meleeDamage << endl;
+    }
+};
+
+// Mage Class
+class Mage : public Character {
+private:
+    int manaPoints, spellPower;
+public:
+    void defend() override {
+        cout << name << " uses a magical barrier to defend!" << endl;
+    }
+
+    void inputData() {
+        Character::inputData();
+        cout << "Enter Mana Points: ";
+        cin >> manaPoints;
+        cout << "Enter Spell Power: ";
+        cin >> spellPower;
+    }
+
+    void displayStats() override {
+        Character::displayStats();
+        cout << "Mana Points: " << manaPoints << endl;
+        cout << "Spell Power: " << spellPower << endl;
+    }
+};
+
+// Archer Class
+class Archer : public Character {
+private:
+    int arrowCount, rangedAccuracy;
+public:
+    void attack() override {
+        cout << name << " performs a long-range arrow attack!" << endl;
+    }
+
+    void inputData() {
+        Character::inputData();
+        cout << "Enter Arrow Count: ";
+        cin >> arrowCount;
+        cout << "Enter Ranged Accuracy: ";
+        cin >> rangedAccuracy;
+    }
+
+    void displayStats() override {
+        Character::displayStats();
+        cout << "Arrow Count: " << arrowCount << endl;
+        cout << "Ranged Accuracy: " << rangedAccuracy << "%" << endl;
+    }
+};
+
+// Rogue Class
+class Rogue : public Character {
+private:
+    int stealthLevel, agility;
+public:
+    void displayStats() override {
+        Character::displayStats();
+        cout << "Stealth Level: " << stealthLevel << endl;
+        cout << "Agility: " << agility << endl;
+    }
+
+    void inputData() {
+        Character::inputData();
+        cout << "Enter Stealth Level: ";
+        cin >> stealthLevel;
+        cout << "Enter Agility: ";
+        cin >> agility;
+    }
+};
+
+int main() {
+    Warrior w;
+    Mage m;
+    Archer a;
+    Rogue r;
+
+    cout << "\n--- Enter Warrior Data ---\n";
+    w.inputData();
+    cout << "\n--- Warrior Actions ---\n";
+    w.attack();
+    w.defend();
+    w.displayStats();
+
+    cout << "\n--- Enter Mage Data ---\n";
+    m.inputData();
+    cout << "\n--- Mage Actions ---\n";
+    m.attack();
+    m.defend();
+    m.displayStats();
+
+    cout << "\n--- Enter Archer Data ---\n";
+    a.inputData();
+    cout << "\n--- Archer Actions ---\n";
+    a.attack();
+    a.defend();
+    a.displayStats();
+
+    cout << "\n--- Enter Rogue Data ---\n";
+    r.inputData();
+    cout << "\n--- Rogue Actions ---\n";
+    r.attack();
+    r.defend();
+    r.displayStats();
+
+    return 0;
+}
