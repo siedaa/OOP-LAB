@@ -1,0 +1,141 @@
+#include<iostream>
+using namespace std;
+class product {
+    protected:
+    int productID;
+    string productName;
+    float price;
+    int stockQuantity;
+
+    public:
+    product(int id, string name, float price, int stock) : productID(id), productName(name), price(price), stockQuantity(stock) {
+        
+    }
+    virtual void applyDiscounts ( float discountPercentage) {
+        price -= (price * discountPercentage / 100);
+    }  
+    
+   virtual  void calculateTotalPrice(int quantity) {
+        if (quantity > stockQuantity) {
+            cout << "Insufficient stock!" << endl;
+        } else {
+            float totalPrice = price * quantity;
+            cout << "Total price for " << quantity << " units of " << productName << ": $" << totalPrice << endl;
+        }
+    }
+
+    void display() {
+        cout << "Product ID: " << productID << endl;
+        cout << "Product Name: " << productName << endl;
+        cout << "Price: $" << price << endl;
+        cout << "Stock Quantity: " << stockQuantity << endl;
+    }
+    friend ostream  & operator << (ostream& os , const product& p);
+    friend float operator + (const product&p1 , const product&p2);
+};
+
+class electronics : public product {
+    int warrantyPeriod; // in months
+    string brand;
+    public:
+    electronics(int id, string name, float price, int stock, int warranty, string brand) : product(id, name, price, stock), warrantyPeriod(warranty), brand(brand) {
+        
+    }
+    void display() {
+        product:: display();
+        cout << "Warranty Period: " << warrantyPeriod << " months" << endl;
+        cout << "Brand: " << brand << endl;
+    }
+
+};
+class clothing : public product {
+    string size;
+    string color;
+    string fabric;
+    public:
+    clothing(int id, string name, float price, int stock, string size, string color, string fabric) : product(id, name, price, stock), size(size), color(color), fabric(fabric) {
+        
+    }
+    void applyDiscounts ( float discountPercentage) {
+        product::applyDiscounts(discountPercentage);
+        cout << "Discount applied to clothing item: " << productName << endl;
+    }
+};
+
+    class foodItem : public product {
+    string expirationDate;  
+    float calories;
+    public:
+    foodItem(int id, string name, float price, int stock, string expDate, float cal) : product(id, name, price, stock), expirationDate(expDate), calories(cal) {
+        
+    }
+    void calculateTotalPrice(int quantity) override {
+        if (quantity > stockQuantity) {
+            cout << "Insufficient stock!" << endl;
+        } else {
+            int bulkDiscount = 5; // 5% discount for bulk purchase`
+            if (quantity > 10) {
+                float discount = (price * bulkDiscount / 100) * quantity;
+                price -= discount;
+                cout << "Bulk purchase discount applied!" << endl;
+            }
+            
+    }
+}
+    
+};
+
+class book : public product {
+    string author;
+    string genre;
+    public:
+    book(int id, string name, float price, int stock, string author, string genre) : product(id, name, price, stock), author(author), genre(genre) {
+        
+    }
+    void disolay() {
+        product:: display();
+        cout << "Author: " << author << endl;
+        cout << "Genre: " << genre << endl;
+    }
+};
+ostream  & operator << (ostream& os , const product& p)
+{
+    os << "productID: " << p.productID << endl;
+    os << "productName: " << p.productName << endl; 
+    os << "price: " << p.price << endl;
+    os << "stockQuantity: " << p.stockQuantity << endl;
+    return os;
+}
+
+float operator + (const product&p1 , const product&p2)
+{
+    return p1.price + p2.price;
+}
+
+int main () {
+    product *p1;
+    electronics e1(101, "Laptop", 1200.00, 10, 24, "Dell");
+    clothing c1(102, "T-Shirt", 20.00, 50, "M", "Red", "Cotton");               
+    foodItem f1(103, "Chips", 2.50, 100, "2024-12-31", 150.0);
+    book b1(104, "The Great Gatsby", 15.00, 30, "F. Scott Fitzgerald", "Fiction");
+    p1 = &e1;
+    e1.display();
+    p1 = &c1;
+    c1.applyDiscounts(10);;
+    p1 = &f1;
+    f1.calculateTotalPrice(5);
+    p1 = &b1;
+    b1.display();
+
+    cout<<"checking operator overloading"<<endl;
+    float combinedPrice = e1 + c1;
+    cout << "Combined price of electronics and clothing: $" << combinedPrice << endl;
+
+    //  using << operator: 
+    cout << e1 << endl;
+    cout << c1 << endl;
+
+    return 0;
+
+
+}
