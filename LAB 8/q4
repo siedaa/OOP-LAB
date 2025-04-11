@@ -1,0 +1,52 @@
+# include<iostream>
+using namespace std;
+class inventoryManager;
+class car {
+    string model;
+    double price;
+    public:
+
+    car (string model , double price) : model(model) , price(price) {}
+    friend class inventoryManager;
+    friend double comparePrice (car &c1 , car &c2);
+};
+class inventoryManager {
+    public:
+   
+    void updatePrice (car &c , double newPrice) {
+        c.price = newPrice;
+        cout << "Updated price of car " << c.model << ": " << c.price << endl;
+    }
+    void display (const car &c) {
+        cout << "Car Model: " << c.model << endl;
+        cout << "Price: " << c.price << endl; 
+    }
+    
+};
+
+double comparePrice (car &c1 , car &c2) {
+    if (c1.price > c2.price ) {
+        cout<<"Car 1 is more expensive than Car 2"<<endl;
+        return c1.price;
+    }
+    else if (c1.price < c2.price) {
+        cout<<"Car 2 is more expensive than Car 1"<<endl;
+        return c2.price;
+    }
+    else {
+        cout<<"Both cars have the same price"<<endl;
+        return 0.0;
+    }
+}
+int main () {
+    car c1("Toyota", 20000.0);
+    car c2("Honda", 25000.0);
+    inventoryManager im;
+    im.display(c1);
+    im.display(c2);
+    double price = comparePrice(c1 , c2);
+    cout << "Price of more expensive car: " << price << endl;
+    im.updatePrice(c1 , 30000.0);
+    im.display(c1);
+    return 0;
+}
