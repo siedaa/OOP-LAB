@@ -1,0 +1,49 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class MenuItem {
+
+    string dishName;
+    double price;
+
+    public:
+
+    virtual void showDetails () = 0; // Pure virtual function
+    virtual void prepare() = 0; // Pure virtual function
+    virtual ~MenuItem(){}
+};
+
+class appetizer :public MenuItem {
+    public:
+    void showDetails () {
+        cout << "Appetizer details." << endl;
+    }
+    void prepare() {
+        cout << "Preparing appetizer." << endl;
+    }
+};
+
+class MainCourse :public MenuItem {
+    public:
+    void showDetails () {
+        cout << "Main course details." << endl;
+    }
+    void prepare() {
+        cout << "Preparing main course." << endl;
+    }
+};
+
+int main () {
+   MenuItem *m1 = new appetizer();
+    m1->showDetails();
+    m1->prepare();
+    delete m1; // Free the allocated memory
+     
+     
+     m1 = new MainCourse();
+     m1->showDetails(); 
+     m1->prepare();
+     delete m1; // Free the allocated memory 
+    return 0;
+}
