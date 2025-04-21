@@ -1,0 +1,50 @@
+#include <iostream>
+using namespace std;
+class shipments {
+protected:
+
+string trackingNumber;
+double weight;
+public:
+shipments(string tNum, double w) : trackingNumber(tNum), weight(w) {}
+virtual void estimateDeiveryTime() =0;
+virtual void showDetails() =0;
+virtual ~shipments(){}
+
+};
+class airFreight: public shipments {
+public:
+airFreight(string tNum, double w) : shipments(tNum, w) {}
+void estimateDeiveryTime() {
+cout << "Air freight delivery time: 2-3 days" << endl; }
+void showDetails() {
+cout << "Air freight shipment details:" << endl;
+cout << "Tracking Number: " << trackingNumber << endl;
+cout << "Weight: " << weight << " kg" << endl; }
+};
+
+class groundFreight: public shipments {
+public:
+groundFreight(string tNum, double w) : shipments(tNum, w) {}
+void estimateDeiveryTime() {
+cout << "Ground freight delivery time: 5-7 days" << endl; }
+void showDetails() {
+cout << "Ground freight shipment details:" << endl;
+cout << "Tracking Number: " << trackingNumber << endl;
+cout << "Weight: " << weight << " kg" << endl; }
+};
+
+
+int main() {
+shipments* shipment1 = new airFreight("A123", 10.5);
+shipment1->estimateDeiveryTime();
+shipment1->showDetails();
+delete shipment1;
+
+shipment1 = new groundFreight("G456", 20.0);
+shipment1->estimateDeiveryTime();
+shipment1->showDetails();
+delete shipment1;
+
+    return 0;
+}
