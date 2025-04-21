@@ -1,0 +1,50 @@
+#include<iostream>
+using namespace std;
+
+class patient {
+    string name;
+    string id;
+
+    public:
+    patient (string name , string id ) : name(name), id(id) {} // Constructor to initialize name and id
+
+    virtual void displayTreatment() = 0; 
+    virtual void calculateCost() = 0;
+    virtual ~patient(){}
+};
+
+class InPatient : public patient {
+    public:
+    InPatient(string name, string id) : patient(name, id) {} // Constructor to initialize name and id
+    void displayTreatment() {
+        cout << "In-patient treatment details." << endl;
+    }
+    void calculateCost() {
+        cout << "Calculating cost for in-patient." << endl;
+    }
+};
+
+class outPatient : public patient {
+    public:
+    outPatient(string name, string id) : patient(name, id) {} // Constructor to initialize name and id
+    void displayTreatment() {
+        cout << "Out-patient treatment details." << endl;
+    }
+    void calculateCost() {
+        cout << "Calculating cost for out-patient." << endl;
+    }
+};
+
+int main () {
+   patient *p1 = new InPatient("John Doe", "IP123");
+  p1->displayTreatment();
+    p1->calculateCost();
+    delete p1; // Free the allocated memory
+     
+    
+    p1 = new outPatient("Jane Doe", "OP456");
+    p1->displayTreatment(); 
+    p1->calculateCost();
+    delete p1; // Free the allocated memory
+    return 0;
+}
