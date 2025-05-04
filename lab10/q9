@@ -1,1 +1,55 @@
+#include <iostream>
+#include <fstream>
+#include <string>
 
+int main() {
+    std::ofstream createFile("large_log.txt");
+    if (createFile.is_open()) {
+        createFile << "This is line 1 of the log file.\n";
+        createFile << "Here is line 2 with some more text.\n";
+        createFile << "Line 3 continues the log entries.\n";
+        createFile.close();
+    } else {
+        std::cerr << "Error creating file." << std::endl;
+        return 1;
+    }
+
+    // Open the file for reading
+    std::ifstream inFile("large_log.txt");
+    if (!inFile.is_open()) {
+        std::cerr << "Error opening file." << std::endl;
+        return 1;
+    }
+
+    // Read first 10 characters
+    char buffer[11]; // +1 for null terminator
+    inFile.read(buffer, 10);
+    buffer[10] = '\0'; // Null-terminate the string
+    std::streampos pos = inFile.tellg();
+    std::cout << "First 10 chars: " << buffer << std::endl;
+    std::cout << "Position after first read: " << pos << std::endl;
+
+    // Read next 10 characters
+    inFile.read(buffer, 10);
+    buffer[10] = '\0';
+    pos = inFile.tellg();
+    std::cout << "Next 10 chars: " << buffer << std::endl;
+    std::cout << "Position after second read: " << pos << std::endl;
+
+    // Alternative: Using getline
+    /*
+    std::string line;
+    std::getline(inFile, line);
+    pos = inFile.tellg();
+    std::cout << "First line: " << line << std::endl;
+    std::cout << "Position after first line: " << pos << std::endl;
+
+    std::getline(inFile, line);
+    pos = inFile.tellg();
+    std::cout << "Second line: " << line << std::endl;
+    std::cout << "Position after second line: " << pos << std::endl;
+    */
+
+    inFile.close();
+    return 0;
+}
