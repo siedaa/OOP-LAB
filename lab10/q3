@@ -1,0 +1,65 @@
+#include <iostream>
+using namespace std;
+#include <string>
+#include<fstream>
+#include<sstream>
+
+class filehandle {
+    ifstream infile;
+    string fileName;
+
+    public:
+    filehandle (string fileName) : fileName(fileName){
+        infile.open(fileName);
+
+    }
+
+    void readData () {
+        string data;
+        // istringstream iss;  //making an abj for istringstream class to store the string so that we can extract the data from it
+        string type , id , name , year , extradate  , certification ;
+        int year1;
+        if (infile.is_open()) {
+            while (getline(infile, data)) {
+                istringstream iss(data);   //add the string to the created object of istringstream class
+                getline(iss , type , ','); // here i wrote the delimiter as ',' so that it can extract the data from the string which is the type of vehicle
+                getline(iss , id , ',');
+                getline(iss , name , ',');
+            getline(iss , year , ',');
+            getline(iss , extradate , ',');
+            getline(iss , certification , ',');
+            cout << "Type: " << type << endl;
+            cout << "ID: " << id << endl;
+            cout << "Year: " << year << endl;
+            cout << "style: " << name << endl;
+            cout << "Extra Date: " << extradate << endl;
+            cout << "Certification: " << certification << endl;
+            year1 = stoi(year); // converting the string to int
+            cout<<"year in int is : " << year1 << endl; // printing the year in int format
+            cout << "----------------------------------" << endl; // to separate the data of each vehicle
+
+            }
+        }
+
+        else {
+            cerr<<"cant open the file"<<endl;
+            exit(1);
+        }
+    }
+
+    ~filehandle () {
+        if (infile.is_open())
+            cout << "File closed" << endl;
+        else
+            cout << "File already closed" << endl;
+      
+    }
+
+
+};
+
+int main() {
+    filehandle f1 ("vehicles.txt");
+    f1.readData();
+    return 0;
+}
