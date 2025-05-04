@@ -1,1 +1,75 @@
 
+#include <iostream>
+#include <cstring> // for strcpy
+#include <string>
+#include <fstream>
+using namespace std;
+
+class inventoryItem {
+    int itemId;
+    char itemName[20];
+    public:
+
+    inventoryItem (int id ,const char *name) {
+        itemId = id;
+        strncpy(itemName , name , sizeof(itemName) -1 ); // copying the name to the itemName variable
+        sizeof(itemName) -1; // to make sure that the last character is null
+
+    }
+    void display() const {
+        std::cout << "Item ID: " << itemId << std::endl;
+        std::cout << "Item Name: " << itemName<< std::endl;
+    }
+
+
+
+// class fileHandling{
+   ofstream outfile;
+   ifstream infile;
+//     string fileName;    
+
+    // public:
+    // fileHandling (string fileName) : fileName(fileName) , outfile(fileName , ios :: binary) {
+    //     if (!outfile.is_open()) {
+    //         cerr << "Error opening file: " << fileName << endl;
+    //         exit(1);
+    //     }
+    // }
+
+    void writeFile ( const string fileName) {
+        outfile.open(fileName , ios:: binary | ios::app); // open the file in append mode
+        outfile.write((char*)&itemId, sizeof(itemId));
+        outfile.write(itemName, sizeof(itemName));
+
+        outfile.close();
+     
+    }
+
+    void readFile(const string fileName) {
+        char name[20];
+        int id;
+        infile.open(fileName , ios:: binary);
+        if (infile.is_open()) {
+            infile.read((char*)&id , sizeof(id)); // reading the data from the file
+infile.read(name , sizeof(name));
+            cout << "Item ID: " << id << endl;
+            cout << "Item Name: " << name << endl;
+        }
+        else {
+            cerr << "Error opening file: " << fileName << endl;
+            exit(1);
+
+
+        }
+    }
+
+};
+
+int main() {
+  
+    inventoryItem item1 (1 , "apple");
+    inventoryItem item2 (2 , "item2"); // creating an object of the inventoryItem class
+   item1.writeFile("inventory.dat"); // writing the data to the file
+item2.readFile("inventory.dat"); // reading the data from the file
+    return 0;
+}
