@@ -1,1 +1,49 @@
+#include <iostream>
+using namespace std;
+#include <string>
+#include<fstream>
 
+int main() {
+    ofstream outfile;
+    outfile.open ("config.txt");
+    if(!outfile.is_open()) {
+        cerr <<"Error opening file" << endl;
+        exit(1);
+
+    }
+
+    outfile<<"AAAAA";
+    outfile <<"BBBBB";
+    outfile<<"CCCCC";
+    outfile.close(); // close the file after writing the data
+
+
+fstream file ("config.txt", ios::in | ios::out); // open the file in read and write mode
+    if (!file.is_open()) {
+        cerr << "Error opening file" << endl;
+        exit(1);
+    }
+
+    file.seekp(5, ios :: beg);
+    file<<"XXXXX"; // write the data to the file
+    file.close(); // close the file after writing the data
+
+    ifstream infile("config.txt"); // open the file in read mode
+    if (!infile.is_open()) {
+        cerr << "Error opening file" << endl;
+        exit(1);
+    }
+    string line;
+    char ch;
+    // while(getline(infile , line)) { // read the data from the file
+    //     cout << line << endl; // print the data to the console
+    // }
+
+    while (infile.get(ch)) {              // both ways possible
+        line+= ch; 
+    }
+        cout << line; // print the data to the console
+    
+    infile.close(); // close the file after reading the data
+    return 0;
+}
