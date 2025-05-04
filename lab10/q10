@@ -1,1 +1,38 @@
+#include <iostream>
+#include <fstream>
+#include <string>
 
+int main() {
+    // Create and write sample records to the file
+    std::ofstream outFile("data_records.txt");
+    if (outFile.is_open()) {
+        outFile << "Record 1\n";  // 8 bytes (including \n)
+        outFile << "Record 2\n";  // 8 bytes (including \n)
+        outFile << "Record 3\n";  // 8 bytes (including \n)
+        outFile << "Record 4\n";  // 8 bytes (including \n)
+        outFile.close();
+    } else {
+        std::cerr << "Error creating file." << std::endl;
+        return 1;
+    }
+
+    // Open the file for reading
+    std::ifstream inFile("data_records.txt");
+    if (!inFile.is_open()) {
+        std::cerr << "Error opening file." << std::endl;
+        return 1;
+    }
+
+    // Calculate the offset to the third record
+    // Each record is 8 bytes (7 chars + \n)
+    // So third record starts at 2 records * 8 bytes = 16
+    inFile.seekg(16, std::ios::beg);
+
+    // Read and print the third record
+    std::string record;
+    std::getline(inFile, record);
+    std::cout << "Third record: " << record << std::endl;
+
+    inFile.close();
+    return 0;
+}
