@@ -1,1 +1,23 @@
+#include <iostream>
+using namespace std;
+#include<fstream>
+int main () {
+    ofstream outfile;
+    outfile.open ("sensor_log.txt" , ios::binary); // open the file in binary mode
+    if (!outfile.is_open()) {
+        cerr << "Error opening file" << endl;
+        exit(1);
+    }
+string data = "Sensor 1: 25.5 C";
+outfile<<data;
+streampos pos = outfile.tellp(); // get the current position of the put pointer
+cout << "Current position of the put pointer: " << pos << endl; // print the current position of the put pointer
 
+outfile << "Sensor 2: 98.1 %RH"; // write the data to the file
+pos = outfile.tellp(); // get the current position of the put pointer
+cout << "Current position of the put pointer: " << pos << endl; // print the current position of the put pointer
+outfile.close(); // close the file after writing the data
+return 0;
+
+
+}
