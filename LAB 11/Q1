@@ -1,0 +1,84 @@
+#include<iostream>
+#include"stdexcept"
+#include<sstream>
+using namespace std;
+
+class DimensionMismatchException:public exception{
+    string message;
+    public:
+    DimensionMismatchException(int r1,int c1,int r2,int c2){
+        stringstream ss;
+        ss<<"DimensionMismatchException - Matrices must have same dimensions ("<<r1<<"x" << c1
+           << " vs " << r2 << "x" << c2 << ")!";
+           message=ss.str();
+    }
+    string what(){
+        return message;
+    }
+};
+
+template <typename T>
+class Matrix{
+    private:
+    int r,c;
+    T** data;
+public:
+Matrix(int r,int c):r(r),c(c){
+data=new T*[r];
+for(int i=0;i<r;i++){
+    data[i]=new T[c];
+    for(int j=0;j<c;j++){
+        data[i][j]=0;
+    }
+}
+}
+
+void input(){
+    cout << "Enter " << r * c << " elements:\n";
+    for (int i = 0; i < r; ++i)
+        for (int j = 0; j < c; ++j)
+            cin >> data[i][j];
+}
+
+void display() const {
+    for (int i = 0; i < r; ++i) {
+        for (int j = 0; j < c; ++j)
+            cout << data[i][j] << " ";
+        cout << endl;
+    }
+}
+
+Matrix<T> operator+(const Matrix<T>& obj)const{
+    if(r!=obj.r||c!=obj.c){
+        throw DimensionMismatchException(r,c,obj.r,obj.c);
+    }
+    Matrix<T> result(r,c);
+    for(int i=0;i<r;i++){
+        for(int j=0;j<c;j++){
+            result.data[i][j]=data[i][j]+obj.data[i][j];
+            return result;
+        }
+    }
+}
+~Matrix() {
+    for (int i = 0; i < r; ++i)
+        delete[] data[i];
+    delete[] data;
+}
+};
+int main(){
+    try{
+        Matrix<int> A(2,2);
+        Matrix<int> B(3,3);
+   
+        A.input();
+        B.input();
+
+        Matrix<int> C=A+B;
+        cout<<"Result:\n";
+        C.display();
+    }
+    catch(DimensionMismatchException &d){
+         cout<<d.what()<<endl;
+    }
+}
