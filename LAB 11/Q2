@@ -1,0 +1,81 @@
+#include <iostream>
+#include "stdexcept"
+using namespace std;
+
+class QueueOverflowException : public exception
+{
+};
+class QueueUnderflowException : public exception
+{
+};
+
+template <typename V>
+class Queue
+{
+private:
+    V *data;
+    int f, r, c, capacity;
+
+public:
+    Queue(int size) : f(0), r(-1), c(0), capacity(size)
+    {
+        data = new V[capacity];
+    }
+
+    void enqueue(V e)
+    {
+        if (c == capacity)
+            throw QueueOverflowException();
+
+        r = (r + 1) % capacity;
+        data[r] = e;
+        c++;
+    }
+
+    V dequeue()
+    {
+        if (c == 0)
+            throw QueueUnderflowException();
+
+        V value = data[f];
+        f = (f + 1) % capacity;
+        c--;
+        return value;
+    }
+
+    ~Queue()
+    {
+        delete[] data;
+    }
+};
+
+int main()
+{
+    Queue<int> q(3);
+
+    try
+    {
+        cout << "Attempting to enqueue to a full queue...\n";
+        q.enqueue(10);
+        q.enqueue(20);
+        q.enqueue(30);
+        q.enqueue(40);
+    }
+    catch (QueueOverflowException &e)
+    {
+        cout << "Caught QueueOverflowException\n";
+        cout << "what(): " << e.what() << endl;
+    }
+
+    Queue<int> q2(2);
+    try
+    {
+        cout << "Attempting to dequeue from an emptyy queue...\n";
+        q2.dequeue();
+    }
+    catch (QueueUnderflowException &e)
+    {
+        cout << "Caught QueueUnderflowException\n";
+        cout << "what(): " << e.what() << endl;
+    }
+}
