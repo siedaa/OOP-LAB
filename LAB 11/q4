@@ -1,0 +1,72 @@
+#include <iostream>
+#include "stdexcept"
+using namespace std;
+
+class DatabaseException : public exception
+{
+public:
+    string what()
+    {
+        return "A database error occured";
+    }
+};
+
+class ConnectionFailedException : public DatabaseException
+{
+};
+class QueryTimeoutException : public DatabaseException
+{
+};
+
+template <typename T>
+class DatabaseConnector
+{
+private:
+    T dname;
+
+public:
+    DatabaseConnector(T name) : dname(name) {}
+
+    void connect()
+    {
+        if (dname == "invalid_db")
+        {
+            throw ConnectionFailedException();
+        }
+        else if (dname == "slow_db")
+        {
+            throw QueryTimeoutException();
+        }
+        else
+        {
+            cout << "Connected to " << dname << "successfully.\n";
+        }
+    }
+};
+
+int main()
+{
+    try
+    {
+        cout << "Attempting to connect to invalid_db...\n";
+        DatabaseConnector<string> d1("invalid_db");
+        d1.connect();
+    }
+    catch (ConnectionFailedException &c)
+    {
+        cout << "Caught ConnectionFailedException - ";
+        cout << "what(): " << c.what() << endl;
+    }
+
+    try
+    {
+        cout << "\nAttempting to connect to slow_db...\n";
+        DatabaseConnector<string> d2("slow_db");
+        d2.connect();
+    }
+    catch (DatabaseException &e)
+    {
+        cout << "Caught a general DatabaseException - ";
+        cout << "what(): " << e.what() << endl;
+    }
+}
