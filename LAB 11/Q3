@@ -1,0 +1,25 @@
+#include <iostream>
+#include "stdexcept"
+using namespace std;
+
+class InvalidTemperatureException:public exception{};
+
+template <typename T>
+T convertToFarenheit(T celsius){
+   if(celsius<-273.15)
+   throw InvalidTemperatureException();
+
+   return (celsius* 9/5)+32;
+}
+
+int main(){
+ try{
+    cout<<"Attempting to convert -300C..\n";
+    double f=convertToFarenheit(-300.0);
+    cout<<"Farenheit: "<<f<<endl;
+ }
+ catch(InvalidTemperatureException &i){
+    cout<<"Caught Invalid temperature exception - ";
+    cout<<"what() :"<<i.what()<<endl;
+ }
+}
